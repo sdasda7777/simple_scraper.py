@@ -9,8 +9,8 @@ except AttributeError:
 
 
 SCRAPE_ONLY_UNPADDED: bool = False
-NUMBER_BASE: int = 16
-NUMBER_FORMAT_STRING: str = "{:x}"
+NUMBER_BASE: int = 10
+NUMBER_FORMAT_STRING: str = "{:d}"
 
 # BASE_URL = "https://support.casio.com/storage/en/manual/pdf/EN/009/"
 # NAME_PREFIX = "qw"
