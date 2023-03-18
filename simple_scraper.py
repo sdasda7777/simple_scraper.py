@@ -28,26 +28,19 @@ if __name__ == "__main__":
         NAME_PREFIX = sys.argv[2]
         NAME_SUFFIX = sys.argv[3]
         DIGITS_NO = int(sys.argv[4])
-        if len(sys.argv) == 6:
-            START_NO = int(sys.argv[5])
-        else:
-            START_NO = 0
+        START_NO = int(sys.argv[5]) if len(sys.argv) == 6 else 0
         
-        for ii in range(START_NO, NUMBER_BASE**DIGITS_NO): # loops item numbers
+        for ii in range(START_NO, NUMBER_BASE**DIGITS_NO):  # loops item numbers
             unpadded_string = NUMBER_FORMAT_STRING.format(ii)
-            
-            if SCRAPE_ONLY_UNPADDED:
-                zero_pad_variations = range(len(unpadded_string), len(unpadded_string)+1)
-            else:
-                zero_pad_variations = range(len(unpadded_string), DIGITS_NO+1)
-            
-            for jj in zero_pad_variations:              # loops zero pad variations
+            zero_pad_variations = range(len(unpadded_string), (len(unpadded_string) if SCRAPE_ONLY_UNPADDED else DIGITS_NO)+1)
+
+            for jj in zero_pad_variations:                  # loops zero pad variations
                 file_name = NAME_PREFIX + unpadded_string.zfill(jj) + NAME_SUFFIX
             
                 response = requests.get(BASE_URL + file_name)
 
                 print(str(response.status_code) + " on " + file_name)
 
-                if response.status_code == 200:         # if OK, saves to file
+                if response.status_code == 200:             # if OK, saves to file
                     with open(file_name,'wb') as local_file:
                         local_file.write(response.content)
